@@ -139,7 +139,10 @@ function New-OSDBuilderISO {
                 $OSImageName = "Server $($Media.Version)"
                 $ISOFile = "$ISODestinationFolder\Server $($Media.Version).iso"
             } else {
-                if ($Media.MajorVersion -eq 10) {
+                if ($Media.Build.SubString(0,1) -eq 2) {
+                    $OSImageName = "Win11 $($Media.Arch) $($Media.ReleaseId) $($Media.UBR)"
+                    $ISOFile = "$ISODestinationFolder\Win11 $($Media.Arch) $($Media.ReleaseId) $($Media.UBR).iso"
+                } elseif ($Media.Build.SubString(0,1) -eq 1) {
                     $OSImageName = "Win10 $($Media.Arch) $($Media.ReleaseId) $($Media.UBR)"
                     $ISOFile = "$ISODestinationFolder\Win10 $($Media.Arch) $($Media.ReleaseId) $($Media.UBR).iso"
                 } elseif ($Media.Version -like "6.3.*") {
