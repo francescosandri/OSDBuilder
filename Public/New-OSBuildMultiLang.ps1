@@ -45,7 +45,7 @@ function New-OSBuildMultiLang {
         Write-Warning "OSBuild MultiLang will take an OSBuild with Language Packs"
         Write-Warning "and create a new OSBuild with multiple Indexes"
         Write-Warning "Each Index will have a Language set as the System UI"
-        Write-Warning "This process will take some time as the LCU will be reapplied"
+        # Write-Warning "This process will take some time as the DotNet & LCU will be reapplied"
         
         #=================================================
         #   Get OSBuilds with Multi Lang
@@ -98,7 +98,7 @@ function New-OSBuildMultiLang {
             $OSBuild                = $($LangMultiWindowsImage.Build)
             $OSInstallationType     = $($LangMultiWindowsImage.InstallationType)
             $OSMajorVersion         = $($LangMultiWindowsImage.MajorVersion)
-            $WindowsImageMediaName  = $($LangMultiWindowsImage.MediaName)
+            $WindowsImageMediaName  = $($LangMultiWindowsImage.ImageName)
             $OSVersion              = $($LangMultiWindowsImage.Version)
 
             if ($OSArchitecture -eq '0') {$OSArchitecture = 'x86'}
@@ -122,6 +122,14 @@ function New-OSBuildMultiLang {
                     }
                 }
             }
+            #=================================================
+            #   OSDUpdateDotNet
+            #=================================================
+            $OSDUpdateDotNet = $AllOSDUpdates
+            $OSDUpdateDotNet = $OSDUpdateDotNet | Where-Object {$_.UpdateArch -eq $OSArchitecture}
+            $OSDUpdateDotNet = $OSDUpdateDotNet | Where-Object {$_.UpdateOS -eq $UpdateOS}
+            $OSDUpdateDotNet = $OSDUpdateDotNet | Where-Object {($_.UpdateBuild -eq $ReleaseId) -or ($_.UpdateBuild -eq '')}
+            $OSDUpdateDotNet = $OSDUpdateDotNet | Where-Object {$_.UpdateGroup -like 'DotNet*'}
             #=================================================
             #   OSDUpdateLCU
             #=================================================
@@ -149,34 +157,55 @@ function New-OSBuildMultiLang {
             #   Process Indexes
             #=================================================
             foreach ($LangMultiLanguage in $LangMultiLanguages) {
-                if ($LangMultiLanguage -eq $LangMultiDefaultName) {
-					#=================================================
-					#   Header
-					#=================================================
-					Show-ActionTime
-					Write-Host -ForegroundColor Green "$($Media.ImageName) $LangMultiDefaultName is already processed as Index 1"
-                } else {
-                    Show-ActionTime
-					Write-Host -ForegroundColor Green "Processing $($Media.ImageName) $LangMultiLanguage"
+                Show-ActionTime
+                Write-Host -ForegroundColor Green "Processing $($Media.ImageName) $LangMultiLanguage"
 
-                    Write-Host "Dism /Image:"$MountDirectory" /Set-AllIntl:$LangMultiLanguage" -ForegroundColor Cyan
-                    Dism /Image:"$MountDirectory" /Set-AllIntl:$LangMultiLanguage
+                Write-Host "Dism /Image:"$MountDirectory" /Set-AllIntl:$LangMultiLanguage" -ForegroundColor Cyan
+                Dism /Image:"$MountDirectory" /Set-AllIntl:$LangMultiLanguage
 
-                    Write-Host "Dism /Image:"$MountDirectory" /Get-Intl" -ForegroundColor Cyan
-                    Dism /Image:"$MountDirectory" /Get-Intl
-                    
-                    Write-Warning "Waiting 10 seconds for processes to complete before applying LCU ..."
-                    Start-Sleep -Seconds 10
-                    Update-CumulativeOS -Force
+                Write-Host "Dism /Image:"$MountDirectory" /Get-Intl" -ForegroundColor Cyan
+                Dism /Image:"$MountDirectory" /Get-Intl
 
-                    Write-Warning "Waiting 10 seconds for processes to complete before Save-WindowsImage ..."
-                    Start-Sleep -Seconds 10
-                    Save-WindowsImage -Path "$MountDirectory" | Out-Null
+                # Write-Warning "Waiting 10 seconds for processes to complete before applying DotNet ..."
+                # Start-Sleep -Seconds 10
+                # Update-DotNetOS -Force
+                
+                # Write-Warning "Waiting 10 seconds for processes to complete before applying LCU ..."
+                # Start-Sleep -Seconds 10
+                # Update-CumulativeOS -Force
 
-                    Write-Warning "Waiting 10 seconds for processes to complete before Export-WindowsImage ..."
-                    Start-Sleep -Seconds 10
-                    Export-WindowsImage -SourceImagePath "$TempInstallWim" -SourceIndex 1 -DestinationImagePath "$DestinationFullName\OS\Sources\install.wim" -DestinationName "$($Media.ImageName) $LangMultiLanguage" | Out-Null
-                }
+                Write-Warning "Waiting 10 seconds for processes to complete before Save-WindowsImage ..."
+                Start-Sleep -Seconds 10
+                Save-WindowsImage -Path "$MountDirectory" | Out-Null
+
+                Write-Warning "Waiting 10 seconds for processes to complete before Export-WindowsImage ..."
+                Start-Sleep -Seconds 10
+                Export-WindowsImage -SourceImagePath "$TempInstallWim" -SourceIndex 1 -DestinationImagePath "$DestinationFullName\OS\Sources\install.wim" -DestinationName "$($Media.ImageName) $LangMultiLanguage" | Out-Null
+            }
+            #=================================================
+            #   Index Rename
+            #=================================================
+            # Retrieve index numbers
+            $ImageCount = (wimlib-imagex info "$DestinationFullName\OS\Sources\install.wim" | Select-String "Image Count:" | ForEach-Object { $_ -replace "Image Count:\s+", "" }).Trim()
+
+            for ($Index = 1; $Index -le [int]$ImageCount; $Index++) {
+                # retrieve wiminfo
+                $WimInfo = wimlib-imagex info "$DestinationFullName\OS\Sources\install.wim" $Index
+
+                # Extract "Default Language"
+                $DefaultLang = ($WimInfo | Select-String "Default Language:" | ForEach-Object { $_ -replace "Default Language:\s+", "" }).Trim()
+                
+                # Extact "Display Name"
+                $DisplayName = ($WimInfo | Select-String "Display Name:" | ForEach-Object { $_ -replace "Display Name:\s+", "" }).Trim()
+                
+                # Extract "Display Description"
+                $DisplayDescription = ($WimInfo | Select-String "Display Description:" | ForEach-Object { $_ -replace "Display Description:\s+", "" }).Trim()
+
+                $DisplayName = "$DisplayName $DefaultLang"
+                $DisplayDescription = "$DisplayDescription $DefaultLang"
+
+                # Set new Display Name and Display Description
+                wimlib-imagex info "$DestinationFullName\OS\Sources\install.wim" $Index --image-property DISPLAYNAME="$DisplayName" --image-property DISPLAYDESCRIPTION="$DisplayDescription"
             }
             #=================================================
             #   Cleanup
