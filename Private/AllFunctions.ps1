@@ -6748,7 +6748,14 @@ function Update-CumulativeOS {
 
         $CurrentLog = "$Info\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-Update-CumulativeOS-KB$($Update.FileKBNumber).log"
         Write-Verbose "CurrentLog: $CurrentLog"
-        Try {Add-WindowsPackage -Path "$MountDirectory" -PackagePath "$UpdateLCU" -LogPath "$CurrentLog" -Verbose | Out-Null}
+        Try {
+            & dism.exe /Image:"$MountDirectory" /Add-Package /PackagePath:"$UpdateLCU" /LogPath:"$CurrentLog" /PreventPending
+            if ($LASTEXITCODE -eq 0x800f081e) {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+            if ($LASTEXITCODE -eq 0x800f0998) {Write-Verbose "OSDBuilder: 0x800f0998 The package may require an SSU installed first" -Verbose}
+            if ($LASTEXITCODE -eq 0x8007007b) {Write-Verbose "OSDBuilder: 0x8007007b This is a bug that Manel Rodero first spotted, working on it" -Verbose}
+            if ($LASTEXITCODE -ne 0) {Write-Verbose "OSDBuilder: Review the log for more information" -Verbose}
+            if ($LASTEXITCODE -ne 0) {Write-Verbose "$CurrentLog" -Verbose}
+        }
         Catch {
             if ($_.Exception.Message -match '0x800f081e') {
                 Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
