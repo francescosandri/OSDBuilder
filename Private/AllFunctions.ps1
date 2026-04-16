@@ -3135,8 +3135,8 @@ function Get-OSDUpdates {
             }
 
             $UpdateBuild = $null
-            if ($Item.Title -match '26H1') {
-                $UpdateBuild = '26H1'
+            if ($Item.Title -match '26H2') {
+                $UpdateBuild = '26H2'
             }
             elseif ($Item.Title -match '25H2') {
                 $UpdateBuild = '25H2'
