@@ -529,6 +529,10 @@ function Import-OSMedia {
             $GetWindowsImage | ConvertTo-Json | Out-File "$OSMediaPathInfo\json\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-Get-WindowsImage.json"
             (Get-Content "$OSMediaPath\WindowsImage.txt") | Where-Object {$_.Trim(" `t")} | Set-Content "$OSMediaPath\WindowsImage.txt"
             #=================================================
+            Write-Verbose 'Remove Temporary Folder'
+            #=================================================
+            if (Test-Path "$MountDirectory") {Remove-Item -Path "$MountDirectory" -Force -Recurse | Out-Null}
+            #=================================================
             #    OSD-Export
             #=================================================
             Save-OSMediaWindowsImageContent
