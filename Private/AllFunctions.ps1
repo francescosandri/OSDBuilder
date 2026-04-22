@@ -19,9 +19,16 @@ function Add-ContentADKWinPE {
             Write-Verbose "CurrentLog: $CurrentLog"
 
             Write-Host -ForegroundColor Gray "  $SetOSDBuilderPathContent\$PackagePath"
-            Try {Add-WindowsPackage -PackagePath "$SetOSDBuilderPathContent\$PackagePath" -Path "$MountWinPE" -LogPath "$CurrentLog" | Out-Null}
+            Try {
+                $DismResult = & dism.exe /Image:"$MountWinPE" /Add-Package /PackagePath:"$SetOSDBuilderPathContent\$PackagePath" /LogPath:"$CurrentLog"
+                if ($LASTEXITCODE -ne 0) {
+                    throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                }
+            }
             Catch {
-                if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+                if ($_.Exception.Message -match '0x800f081e') {
+                    Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                }
                 Write-Verbose "$CurrentLog" -Verbose
             }
         }
@@ -34,9 +41,16 @@ function Add-ContentADKWinPE {
             Write-Verbose "CurrentLog: $CurrentLog"
 
             Write-Host -ForegroundColor Gray "  $SetOSDBuilderPathContent\$PackagePath"
-            Try {Add-WindowsPackage -PackagePath "$SetOSDBuilderPathContent\$PackagePath" -Path "$MountWinPE" -LogPath "$CurrentLog" | Out-Null}
+            Try {
+                $DismResult = & dism.exe /Image:"$MountWinPE" /Add-Package /PackagePath:"$SetOSDBuilderPathContent\$PackagePath" /LogPath:"$CurrentLog"
+                if ($LASTEXITCODE -ne 0) {
+                    throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                }
+            }
             Catch {
-                if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+                if ($_.Exception.Message -match '0x800f081e') {
+                    Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                }
                 Write-Verbose "$CurrentLog" -Verbose
             }
         }
@@ -50,9 +64,16 @@ function Add-ContentADKWinPE {
         if ($OSMajorVersion -eq 6) {
             dism /Image:"$MountWinPE" /Add-Package /PackagePath:"$SetOSDBuilderPathContent\$PackagePath" /LogPath:"$CurrentLog"
         } else {
-            Try {Add-WindowsPackage -PackagePath "$SetOSDBuilderPathContent\$PackagePath" -Path "$MountWinPE" -LogPath "$CurrentLog" | Out-Null}
+            Try {
+                $DismResult = & dism.exe /Image:"$MountWinPE" /Add-Package /PackagePath:"$SetOSDBuilderPathContent\$PackagePath" /LogPath:"$CurrentLog"
+                if ($LASTEXITCODE -ne 0) {
+                    throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                }
+            }
             Catch {
-                if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+                if ($_.Exception.Message -match '0x800f081e') {
+                    Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                }
                 Write-Verbose "$CurrentLog" -Verbose
             }
         }
@@ -79,9 +100,16 @@ function Add-ContentADKWinRE {
 
         if ($PackagePath -like "*WinPE-NetFx*") {
             Write-Host -ForegroundColor Gray "  $SetOSDBuilderPathContent\$PackagePath"
-            Try {Add-WindowsPackage -PackagePath "$SetOSDBuilderPathContent\$PackagePath" -Path "$MountWinRE" -LogPath "$CurrentLog" | Out-Null}
+            Try {
+                $DismResult = & dism.exe /Image:"$MountWinRE" /Add-Package /PackagePath:"$SetOSDBuilderPathContent\$PackagePath" /LogPath:"$CurrentLog"
+                if ($LASTEXITCODE -ne 0) {
+                    throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                }
+            }
             Catch {
-                if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+                if ($_.Exception.Message -match '0x800f081e') {
+                    Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                }
                 Write-Verbose "$CurrentLog" -Verbose
             }
         }
@@ -94,9 +122,16 @@ function Add-ContentADKWinRE {
 
         if ($PackagePath -like "*WinPE-PowerShell*") {
             Write-Host -ForegroundColor Gray "  $SetOSDBuilderPathContent\$PackagePath"
-            Try {Add-WindowsPackage -PackagePath "$SetOSDBuilderPathContent\$PackagePath" -Path "$MountWinRE" -LogPath "$CurrentLog" | Out-Null}
+            Try {
+                $DismResult = & dism.exe /Image:"$MountWinRE" /Add-Package /PackagePath:"$SetOSDBuilderPathContent\$PackagePath" /LogPath:"$CurrentLog"
+                if ($LASTEXITCODE -ne 0) {
+                    throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                }
+            }
             Catch {
-                if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+                if ($_.Exception.Message -match '0x800f081e') {
+                    Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                }
                 Write-Verbose "$CurrentLog" -Verbose
             }
         }
@@ -110,9 +145,16 @@ function Add-ContentADKWinRE {
         if ($OSMajorVersion -eq 6) {
             dism /Image:"$MountWinRE" /Add-Package /PackagePath:"$SetOSDBuilderPathContent\$PackagePath" /LogPath:"$CurrentLog"
         } else {
-            Try {Add-WindowsPackage -PackagePath "$SetOSDBuilderPathContent\$PackagePath" -Path "$MountWinRE" -LogPath "$CurrentLog" | Out-Null}
+            Try {
+                $DismResult = & dism.exe /Image:"$MountWinRE" /Add-Package /PackagePath:"$SetOSDBuilderPathContent\$PackagePath" /LogPath:"$CurrentLog"
+                if ($LASTEXITCODE -ne 0) {
+                    throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                }
+            }
             Catch {
-                if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+                if ($_.Exception.Message -match '0x800f081e') {
+                    Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                }
                 Write-Verbose "$CurrentLog" -Verbose
             }
         }
@@ -142,9 +184,16 @@ function Add-ContentADKWinSE {
 
         if ($PackagePath -like "*WinPE-NetFx*") {
             Write-Host -ForegroundColor Gray "  $SetOSDBuilderPathContent\$PackagePath"
-            Try {Add-WindowsPackage -PackagePath "$SetOSDBuilderPathContent\$PackagePath" -Path "$MountWinSE" -LogPath "$CurrentLog" | Out-Null}
+            Try {
+                $DismResult = & dism.exe /Image:"$MountWinSE" /Add-Package /PackagePath:"$SetOSDBuilderPathContent\$PackagePath" /LogPath:"$CurrentLog"
+                if ($LASTEXITCODE -ne 0) {
+                    throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                }
+            }
             Catch {
-                if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+                if ($_.Exception.Message -match '0x800f081e') {
+                    Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                }
                 Write-Verbose "$CurrentLog" -Verbose
             }
         }
@@ -156,9 +205,16 @@ function Add-ContentADKWinSE {
 
         if ($PackagePath -like "*WinPE-PowerShell*") {
             Write-Host -ForegroundColor Gray "  $SetOSDBuilderPathContent\$PackagePath"
-            Try {Add-WindowsPackage -PackagePath "$SetOSDBuilderPathContent\$PackagePath" -Path "$MountWinSE" -LogPath "$CurrentLog" | Out-Null}
+            Try {
+                $DismResult = & dism.exe /Image:"$MountWinSE" /Add-Package /PackagePath:"$SetOSDBuilderPathContent\$PackagePath" /LogPath:"$CurrentLog"
+                if ($LASTEXITCODE -ne 0) {
+                    throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                }
+            }
             Catch {
-                if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+                if ($_.Exception.Message -match '0x800f081e') {
+                    Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                }
                 Write-Verbose "$CurrentLog" -Verbose
             }
         }
@@ -172,9 +228,16 @@ function Add-ContentADKWinSE {
         if ($OSMajorVersion -eq 6) {
             dism /Image:"$MountWinSE" /Add-Package /PackagePath:"$SetOSDBuilderPathContent\$PackagePath" /LogPath:"$CurrentLog.log"
         } else {
-            Try {Add-WindowsPackage -PackagePath "$SetOSDBuilderPathContent\$PackagePath" -Path "$MountWinSE" -LogPath "$CurrentLog" | Out-Null}
+            Try {
+                $DismResult = & dism.exe /Image:"$MountWinSE" /Add-Package /PackagePath:"$SetOSDBuilderPathContent\$PackagePath" /LogPath:"$CurrentLog"
+                if ($LASTEXITCODE -ne 0) {
+                    throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                }
+            }
             Catch {
-                if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+                if ($_.Exception.Message -match '0x800f081e') {
+                    Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                }
                 Write-Verbose "$CurrentLog" -Verbose
             }
         }
@@ -1064,10 +1127,15 @@ function Add-ContentPackOSLanguageFeatures {
         if ($MountDirectory) {
             Try {
                 $global:ReapplyLCU = $true
-                Add-WindowsPackage -PackagePath "$($OSLanguageFeaturesFile.FullName)" -Path "$MountDirectory" -LogPath $CurrentLog | Out-Null
+                $DismResult = & dism.exe /Image:"$MountDirectory" /Add-Package /PackagePath:"$($OSLanguageFeaturesFile.FullName)" /LogPath:"$CurrentLog"
+                if ($LASTEXITCODE -ne 0) {
+                    throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                }
             }
             Catch {
-                if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+                if ($_.Exception.Message -match '0x800f081e') {
+                    Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                }
                 Write-Verbose "$CurrentLog" -Verbose
             }
         }
@@ -1102,9 +1170,16 @@ function Add-ContentPackOSLanguagePacks {
         Write-Host "$($OSLanguagePacksFile.FullName)" -ForegroundColor DarkGray
 
         if ($MountDirectory) {
-            Try {Add-WindowsPackage -PackagePath "$($OSLanguagePacksFile.FullName)" -Path "$MountDirectory" -LogPath $CurrentLog | Out-Null}
+            Try {
+                $DismResult = & dism.exe /Image:"$MountDirectory" /Add-Package /PackagePath:"$($OSLanguagePacksFile.FullName)" /LogPath:"$CurrentLog"
+                if ($LASTEXITCODE -ne 0) {
+                    throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                }
+            }
             Catch {
-                if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+                if ($_.Exception.Message -match '0x800f081e') {
+                    Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                }
                 Write-Verbose "$CurrentLog" -Verbose
             }
         }
@@ -1179,10 +1254,15 @@ function Add-ContentPackOSPackages {
         if ($MountDirectory) {
             Try {
                 $global:ReapplyLCU = $true
-                Add-WindowsPackage -PackagePath "$($item.FullName)" -Path "$MountDirectory" -LogPath $CurrentLog | Out-Null
+                $DismResult = & dism.exe /Image:"$MountDirectory" /Add-Package /PackagePath:"$($item.FullName)" /LogPath:"$CurrentLog"
+                if ($LASTEXITCODE -ne 0) {
+                    throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                }
             }
             Catch {
-                if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+                if ($_.Exception.Message -match '0x800f081e') {
+                    Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                }
                 Write-Verbose "$CurrentLog" -Verbose
             }
         }
@@ -1443,11 +1523,15 @@ function Add-ContentPackPEADK {
             Write-Host -ForegroundColor Cyan "  $($ADKFile.Name)"
             if ($MountDirectory) {
                 Try {
-                    Add-WindowsPackage -PackagePath "$($ADKFile.FullName)" -Path "$MountDirectory" -LogPath "$CurrentLog" | Out-Null
+                    $DismResult = & dism.exe /Image:"$MountDirectory" /Add-Package /PackagePath:"$($ADKFile.FullName)" /LogPath:"$CurrentLog"
+                    if ($LASTEXITCODE -ne 0) {
+                        throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                    }
                 }
                 Catch {
-                    if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
-
+                    if ($_.Exception.Message -match '0x800f081e') {
+                        Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                    }
                     Write-Verbose "$CurrentLog" -Verbose
                 }
             }
@@ -1458,10 +1542,16 @@ function Add-ContentPackPEADK {
             Write-Verbose "CurrentLog: $CurrentLog"
             Write-Host -ForegroundColor Cyan "  $($ADKFile.Name)"
             if ($MountDirectory) {
-                Try {Add-WindowsPackage -PackagePath "$($ADKFile.FullName)" -Path "$MountDirectory" -LogPath "$CurrentLog" | Out-Null}
+                Try {
+                    $DismResult = & dism.exe /Image:"$MountDirectory" /Add-Package /PackagePath:"$($ADKFile.FullName)" /LogPath:"$CurrentLog"
+                    if ($LASTEXITCODE -ne 0) {
+                        throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                    }
+                }
                 Catch {
-                    if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
-
+                    if ($_.Exception.Message -match '0x800f081e') {
+                        Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                    }
                     Write-Verbose "$CurrentLog" -Verbose
                 }
             }
@@ -1472,10 +1562,16 @@ function Add-ContentPackPEADK {
             Write-Verbose "CurrentLog: $CurrentLog"
             Write-Host -ForegroundColor Cyan "  $($ADKFile.Name)"
             if ($MountDirectory) {
-                Try {Add-WindowsPackage -PackagePath "$($ADKFile.FullName)" -Path "$MountDirectory" -LogPath "$CurrentLog" | Out-Null}
+                Try {
+                    $DismResult = & dism.exe /Image:"$MountDirectory" /Add-Package /PackagePath:"$($ADKFile.FullName)" /LogPath:"$CurrentLog"
+                    if ($LASTEXITCODE -ne 0) {
+                        throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                    }
+                }
                 Catch {
-                    if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
-
+                    if ($_.Exception.Message -match '0x800f081e') {
+                        Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                    }
                     Write-Verbose "$CurrentLog" -Verbose
                 }
             }
@@ -1486,10 +1582,16 @@ function Add-ContentPackPEADK {
             Write-Verbose "CurrentLog: $CurrentLog"
             Write-Host -ForegroundColor Cyan "  $($ADKFile.Name)"
             if ($MountDirectory) {
-                Try {Add-WindowsPackage -PackagePath "$($ADKFile.FullName)" -Path "$MountDirectory" -LogPath "$CurrentLog" | Out-Null}
+                Try {
+                    $DismResult = & dism.exe /Image:"$MountDirectory" /Add-Package /PackagePath:"$($ADKFile.FullName)" /LogPath:"$CurrentLog"
+                    if ($LASTEXITCODE -ne 0) {
+                        throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                    }
+                }
                 Catch {
-                    if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
-
+                    if ($_.Exception.Message -match '0x800f081e') {
+                        Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                    }
                     Write-Verbose "$CurrentLog" -Verbose
                 }
             }
@@ -1502,30 +1604,45 @@ function Add-ContentPackPEADK {
         if ($MountWinPE) {
             $CurrentLog = "$Info\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-ContentPackPEADK-$($ADKFile.Name).log"
             Try {
-                Add-WindowsPackage -PackagePath "$($ADKFile.FullName)" -Path "$MountWinPE" -LogPath "$CurrentLog" | Out-Null
+                $DismResult = & dism.exe /Image:"$MountWinPE" /Add-Package /PackagePath:"$($ADKFile.FullName)" /LogPath:"$CurrentLog"
+                if ($LASTEXITCODE -ne 0) {
+                    throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                }
             }
             Catch {
-                if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+                if ($_.Exception.Message -match '0x800f081e') {
+                    Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                }
                 Write-Verbose "$CurrentLog" -Verbose
             }
         }
         if ($MountWinRE) {
             $CurrentLog = "$Info\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-ContentPackPEADK-$($ADKFile.Name).log"
             Try {
-                Add-WindowsPackage -PackagePath "$($ADKFile.FullName)" -Path "$MountWinRE" -LogPath "$CurrentLog" | Out-Null
+                $DismResult = & dism.exe /Image:"$MountWinRE" /Add-Package /PackagePath:"$($ADKFile.FullName)" /LogPath:"$CurrentLog"
+                if ($LASTEXITCODE -ne 0) {
+                    throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                }
             }
             Catch {
-                if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+                if ($_.Exception.Message -match '0x800f081e') {
+                    Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                }
                 Write-Verbose "$CurrentLog" -Verbose
             }
         }
         if ($MountWinSE) {
             $CurrentLog = "$Info\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-ContentPackPEADK-$($ADKFile.Name).log"
             Try {
-                Add-WindowsPackage -PackagePath "$($ADKFile.FullName)" -Path "$MountWinSE" -LogPath "$CurrentLog" | Out-Null
+                $DismResult = & dism.exe /Image:"$MountWinSE" /Add-Package /PackagePath:"$($ADKFile.FullName)" /LogPath:"$CurrentLog"
+                if ($LASTEXITCODE -ne 0) {
+                    throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                }
             }
             Catch {
-                if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+                if ($_.Exception.Message -match '0x800f081e') {
+                    Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                }
                 Write-Verbose "$CurrentLog" -Verbose
             }
         }
@@ -1540,10 +1657,15 @@ function Add-ContentPackPEADK {
             $CurrentLog = "$Info\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-ContentPackPEADK-$($ADKFile.Name).log"
             Write-Host -ForegroundColor Cyan "  $($ADKFile.Name) (WinPE)"
             Try {
-                Add-WindowsPackage -PackagePath "$($ADKFile.FullName)" -Path "$MountWinPE" -LogPath "$CurrentLog" | Out-Null
+                $DismResult = & dism.exe /Image:"$MountWinPE" /Add-Package /PackagePath:"$($ADKFile.FullName)" /LogPath:"$CurrentLog"
+                if ($LASTEXITCODE -ne 0) {
+                    throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                }
             }
             Catch {
-                if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+                if ($_.Exception.Message -match '0x800f081e') {
+                    Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                }
                 Write-Verbose "$CurrentLog" -Verbose
             }
         }
@@ -1553,10 +1675,15 @@ function Add-ContentPackPEADK {
             $CurrentLog = "$Info\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-ContentPackPEADK-$($ADKFile.Name).log"
             Write-Host -ForegroundColor Cyan "  $($ADKFile.Name) (WinRE)"
             Try {
-                Add-WindowsPackage -PackagePath "$($ADKFile.FullName)" -Path "$MountWinRE" -LogPath "$CurrentLog" | Out-Null
+                $DismResult = & dism.exe /Image:"$MountWinRE" /Add-Package /PackagePath:"$($ADKFile.FullName)" /LogPath:"$CurrentLog"
+                if ($LASTEXITCODE -ne 0) {
+                    throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                }
             }
             Catch {
-                if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+                if ($_.Exception.Message -match '0x800f081e') {
+                    Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                }
                 Write-Verbose "$CurrentLog" -Verbose
             }
         }
@@ -1566,10 +1693,15 @@ function Add-ContentPackPEADK {
             $CurrentLog = "$Info\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-ContentPackPEADK-$($ADKFile.Name).log"
             Write-Host -ForegroundColor Cyan "  $($ADKFile.Name) (WinSE)"
             Try {
-                Add-WindowsPackage -PackagePath "$($ADKFile.FullName)" -Path "$MountWinSE" -LogPath "$CurrentLog" | Out-Null
+                $DismResult = & dism.exe /Image:"$MountWinSE" /Add-Package /PackagePath:"$($ADKFile.FullName)" /LogPath:"$CurrentLog"
+                if ($LASTEXITCODE -ne 0) {
+                    throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                }
             }
             Catch {
-                if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+                if ($_.Exception.Message -match '0x800f081e') {
+                    Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                }
                 Write-Verbose "$CurrentLog" -Verbose
             }
         }
@@ -1580,10 +1712,15 @@ function Add-ContentPackPEADK {
             $CurrentLog = "$Info\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-ContentPackPEADK-$($ADKFile.Name).log"
             Write-Host -ForegroundColor Cyan "  $($ADKFile.Name) (WinPE)"
             Try {
-                Add-WindowsPackage -PackagePath "$($ADKFile.FullName)" -Path "$MountWinPE" -LogPath "$CurrentLog" | Out-Null
+                $DismResult = & dism.exe /Image:"$MountWinPE" /Add-Package /PackagePath:"$($ADKFile.FullName)" /LogPath:"$CurrentLog"
+                if ($LASTEXITCODE -ne 0) {
+                    throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                }
             }
             Catch {
-                if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+                if ($_.Exception.Message -match '0x800f081e') {
+                    Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                }
                 Write-Verbose "$CurrentLog" -Verbose
             }
         }
@@ -1593,10 +1730,15 @@ function Add-ContentPackPEADK {
             $CurrentLog = "$Info\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-ContentPackPEADK-$($ADKFile.Name).log"
             Write-Host -ForegroundColor Cyan "  $($ADKFile.Name) (WinRE)"
             Try {
-                Add-WindowsPackage -PackagePath "$($ADKFile.FullName)" -Path "$MountWinRE" -LogPath "$CurrentLog" | Out-Null
+                $DismResult = & dism.exe /Image:"$MountWinRE" /Add-Package /PackagePath:"$($ADKFile.FullName)" /LogPath:"$CurrentLog"
+                if ($LASTEXITCODE -ne 0) {
+                    throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                }
             }
             Catch {
-                if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+                if ($_.Exception.Message -match '0x800f081e') {
+                    Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                }
                 Write-Verbose "$CurrentLog" -Verbose
             }
         }
@@ -1606,10 +1748,15 @@ function Add-ContentPackPEADK {
             $CurrentLog = "$Info\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-ContentPackPEADK-$($ADKFile.Name).log"
             Write-Host -ForegroundColor Cyan "  $($ADKFile.Name) (WinSE)"
             Try {
-                Add-WindowsPackage -PackagePath "$($ADKFile.FullName)" -Path "$MountWinSE" -LogPath "$CurrentLog" | Out-Null
+                $DismResult = & dism.exe /Image:"$MountWinSE" /Add-Package /PackagePath:"$($ADKFile.FullName)" /LogPath:"$CurrentLog"
+                if ($LASTEXITCODE -ne 0) {
+                    throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                }
             }
             Catch {
-                if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+                if ($_.Exception.Message -match '0x800f081e') {
+                    Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                }
                 Write-Verbose "$CurrentLog" -Verbose
             }
         }
@@ -2025,10 +2172,15 @@ function Add-FeaturesOnDemandOS {
         $CurrentLog = "$Info\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-Add-FeaturesOnDemandOS.log"
         Write-Verbose "CurrentLog: $CurrentLog"
         Try {
-            Add-WindowsPackage -Path "$MountDirectory" -PackagePath "$SetOSDBuilderPathContent\$FOD" -LogPath "$CurrentLog" | Out-Null
+            $DismResult = & dism.exe /Image:"$MountDirectory" /Add-Package /PackagePath:"$SetOSDBuilderPathContent\$FOD" /LogPath:"$CurrentLog"
+            if ($LASTEXITCODE -ne 0) {
+                throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+            }
         }
         Catch {
-            if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+            if ($_.Exception.Message -match '0x800f081e') {
+                Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+            }
             Write-Verbose "OSDBuilder: Review the log for more information" -Verbose
             Write-Verbose "$CurrentLog" -Verbose
         }
@@ -2058,9 +2210,16 @@ function Add-LanguageFeaturesOnDemandOS {
             Write-Host "    $SetOSDBuilderPathContent\$Update" -ForegroundColor DarkGray
 
             $CurrentLog = "$Info\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-Add-LanguageFeaturesOnDemandOS.log"
-            Try {Add-WindowsPackage -Path "$MountDirectory" -PackagePath "$SetOSDBuilderPathContent\$Update" -LogPath $CurrentLog | Out-Null}
+            Try {
+                $DismResult = & dism.exe /Image:"$MountDirectory" /Add-Package /PackagePath:"$SetOSDBuilderPathContent\$Update" /LogPath:"$CurrentLog"
+                if ($LASTEXITCODE -ne 0) {
+                    throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                }
+            }
             Catch {
-                if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+                if ($_.Exception.Message -match '0x800f081e') {
+                    Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                }
                 Write-Verbose "$CurrentLog" -Verbose
             }
         }
@@ -2071,9 +2230,16 @@ function Add-LanguageFeaturesOnDemandOS {
             Write-Host "    $SetOSDBuilderPathContent\$Update" -ForegroundColor DarkGray
 
             $CurrentLog = "$Info\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-Add-LanguageFeaturesOnDemandOS.log"
-            Try {Add-WindowsPackage -Path "$MountDirectory" -PackagePath "$SetOSDBuilderPathContent\$Update" -LogPath $CurrentLog | Out-Null}
+            Try {
+                $DismResult = & dism.exe /Image:"$MountDirectory" /Add-Package /PackagePath:"$SetOSDBuilderPathContent\$Update" /LogPath:"$CurrentLog"
+                if ($LASTEXITCODE -ne 0) {
+                    throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                }
+            }
             Catch {
-                if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+                if ($_.Exception.Message -match '0x800f081e') {
+                    Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                }
                 Write-Verbose "$CurrentLog" -Verbose
             }
         }
@@ -2084,9 +2250,16 @@ function Add-LanguageFeaturesOnDemandOS {
             Write-Host "    $SetOSDBuilderPathContent\$Update" -ForegroundColor DarkGray
 
             $CurrentLog = "$Info\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-Add-LanguageFeaturesOnDemandOS.log"
-            Try {Add-WindowsPackage -Path "$MountDirectory" -PackagePath "$SetOSDBuilderPathContent\$Update" -LogPath $CurrentLog | Out-Null}
+            Try {
+                $DismResult = & dism.exe /Image:"$MountDirectory" /Add-Package /PackagePath:"$SetOSDBuilderPathContent\$Update" /LogPath:"$CurrentLog"
+                if ($LASTEXITCODE -ne 0) {
+                    throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                }
+            }
             Catch {
-                if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+                if ($_.Exception.Message -match '0x800f081e') {
+                    Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                }
                 Write-Verbose "$CurrentLog" -Verbose
             }
         }
@@ -2115,10 +2288,15 @@ function Add-LanguageInterfacePacksOS {
             $CurrentLog = "$Info\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-Add-LanguageInterfacePacksOS.log"
             Try {
                 $global:ReapplyLCU = $true
-                Add-WindowsPackage -Path "$MountDirectory" -PackagePath "$SetOSDBuilderPathContent\$Update" -LogPath $CurrentLog | Out-Null
+                $DismResult = & dism.exe /Image:"$MountDirectory" /Add-Package /PackagePath:"$SetOSDBuilderPathContent\$Update" /LogPath:"$CurrentLog"
+                if ($LASTEXITCODE -ne 0) {
+                    throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                }
             }
             Catch {
-                if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+                if ($_.Exception.Message -match '0x800f081e') {
+                    Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                }
                 Write-Verbose "$CurrentLog" -Verbose
             }
         } else {
@@ -2150,11 +2328,15 @@ function Add-LanguagePacksOS {
                 $CurrentLog = "$Info\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-Add-LanguagePacksOS.log"
                 Try {
                     $global:ReapplyLCU = $true
-                    Add-WindowsPackage -Path "$MountDirectory" -PackagePath "$SetOSDBuilderPathContent\$Update" -LogPath $CurrentLog | Out-Null
+                    $DismResult = & dism.exe /Image:"$MountDirectory" /Add-Package /PackagePath:"$SetOSDBuilderPathContent\$Update" /LogPath:"$CurrentLog"
+                    if ($LASTEXITCODE -ne 0) {
+                        throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+                    }
                 }
                 Catch {
-                    if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
-
+                    if ($_.Exception.Message -match '0x800f081e') {
+                        Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+                    }
                     Write-Verbose "$CurrentLog" -Verbose
                 }
             } elseif ($Update -like "*.appx") {
@@ -2211,10 +2393,15 @@ function Add-WindowsPackageOS {
         $CurrentLog = "$Info\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-Add-WindowsPackageOS.log"
         Try {
             $global:ReapplyLCU = $true
-            Add-WindowsPackage -PackagePath "$SetOSDBuilderPathContent\$PackagePath" -Path "$MountDirectory" -LogPath $CurrentLog | Out-Null
+            $DismResult = & dism.exe /Image:"$MountDirectory" /Add-Package /PackagePath:"$SetOSDBuilderPathContent\$PackagePath" /LogPath:"$CurrentLog"
+            if ($LASTEXITCODE -ne 0) {
+                throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+            }
         }
         Catch {
-            if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+            if ($_.Exception.Message -match '0x800f081e') {
+                Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+            }
             Write-Verbose "OSDBuilder: Review the log for more information" -Verbose
             Write-Verbose "$CurrentLog" -Verbose
         }
@@ -3098,7 +3285,7 @@ function Get-OSDUpdateDownloads {
                 }
                 else {
                     #PowerShell ISE will display a NativeCommandError, so progress will not be displayed
-                    $Quiet = Invoke-Expression "& curl.exe --insecure --location --output `"$DownloadFullPath`" --url `"$SourceUrl`" 2>&1"
+                    $Quiet = Invoke-Expression "& curl.exe --insecure --location --output `"$DownloadFullPath`" --url `"$SourceUrl`""
                 }
             }
             else {
@@ -6610,9 +6797,16 @@ function Update-AdobeOS {
 
         $CurrentLog = "$Info\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-Update-AdobeOS-KB$($Update.FileKBNumber).log"
         Write-Verbose "CurrentLog: $CurrentLog"
-        Try {Add-WindowsPackage -Path "$MountDirectory" -PackagePath "$UpdateASU" -LogPath $CurrentLog | Out-Null}
+        Try {
+            $DismResult = & dism.exe /Image:"$MountDirectory" /Add-Package /PackagePath:"$UpdateASU" /LogPath:"$CurrentLog"
+            if ($LASTEXITCODE -ne 0) {
+                throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+            }
+        }
         Catch {
-            if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+            if ($_.Exception.Message -match '0x800f081e') {
+                Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+            }
             Write-Verbose "OSDBuilder: Review the log for more information" -Verbose
             Write-Verbose "$CurrentLog" -Verbose
         }
@@ -6661,9 +6855,16 @@ function Update-ComponentOS {
 
         $CurrentLog = "$Info\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-Update-ComponentOS-KB$($Update.FileKBNumber).log"
         Write-Verbose "CurrentLog: $CurrentLog"
-        Try {Add-WindowsPackage -Path "$MountDirectory" -PackagePath "$UpdateComp" -LogPath "$CurrentLog" | Out-Null}
+        Try {
+            $DismResult = & dism.exe /Image:"$MountDirectory" /Add-Package /PackagePath:"$UpdateComp" /LogPath:"$CurrentLog"
+            if ($LASTEXITCODE -ne 0) {
+                throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+            }
+        }
         Catch {
-            if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+            if ($_.Exception.Message -match '0x800f081e') {
+                Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+            }
             Write-Verbose "OSDBuilder: Review the log for more information" -Verbose
             Write-Verbose "$CurrentLog" -Verbose
         }
@@ -6833,9 +7034,16 @@ function Update-CumulativePE {
         $CurrentLog = "$PEInfo\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-Update-CumulativePE-KB$($Update.KBNumber)-WinPE.log"
         Write-Verbose "CurrentLog: $CurrentLog"
 
-        Try {Add-WindowsPackage -Path "$MountWinPE" -PackagePath "$UpdateLCU" -LogPath "$CurrentLog" | Out-Null}
+        Try {
+            $DismResult = & dism.exe /Image:"$MountWinPE" /Add-Package /PackagePath:"$UpdateLCU" /LogPath:"$CurrentLog"
+            if ($LASTEXITCODE -ne 0) {
+                throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+            }
+        }
         Catch {
-            if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+            if ($_.Exception.Message -match '0x800f081e') {
+                Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+            }
             Write-Verbose "OSDBuilder: Review the log for more information" -Verbose
             Write-Verbose "$CurrentLog" -Verbose
         }
@@ -6874,9 +7082,16 @@ function Update-CumulativePE {
 
         $CurrentLog = "$PEInfo\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-Update-CumulativePE-KB$($Update.KBNumber)-WinRE.log"
         Write-Verbose "CurrentLog: $CurrentLog"
-        Try {Add-WindowsPackage -Path "$MountWinRE" -PackagePath "$UpdateLCU" -LogPath "$CurrentLog" | Out-Null}
+        Try {
+            $DismResult = & dism.exe /Image:"$MountWinRE" /Add-Package /PackagePath:"$UpdateLCU" /LogPath:"$CurrentLog"
+            if ($LASTEXITCODE -ne 0) {
+                throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+            }
+        }
         Catch {
-            if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+            if ($_.Exception.Message -match '0x800f081e') {
+                Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+            }
             Write-Verbose "OSDBuilder: Review the log for more information" -Verbose
             Write-Verbose "$CurrentLog" -Verbose
         }
@@ -6918,9 +7133,16 @@ function Update-CumulativePE {
 
         $CurrentLog = "$PEInfo\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-Update-CumulativePE-KB$($Update.KBNumber)-WinSE.log"
         Write-Verbose "CurrentLog: $CurrentLog"
-        Try {Add-WindowsPackage -Path "$MountWinSE" -PackagePath "$UpdateLCU" -LogPath "$CurrentLog" | Out-Null}
+        Try {
+            $DismResult = & dism.exe /Image:"$MountWinSE" /Add-Package /PackagePath:"$UpdateLCU" /LogPath:"$CurrentLog"
+            if ($LASTEXITCODE -ne 0) {
+                throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+            }
+        }
         Catch {
-            if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+            if ($_.Exception.Message -match '0x800f081e') {
+                Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+            }
             Write-Verbose "OSDBuilder: Review the log for more information" -Verbose
             Write-Verbose "$CurrentLog" -Verbose
         }
@@ -6979,9 +7201,16 @@ function Update-DotNetOS {
 
         $CurrentLog = "$Info\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-Update-DotNetOS-KB$($Update.FileKBNumber).log"
         Write-Verbose "CurrentLog: $CurrentLog"
-        Try {Add-WindowsPackage -Path "$MountDirectory" -PackagePath "$UpdateNetCU" -LogPath "$CurrentLog" | Out-Null}
+        Try {
+            $DismResult = & dism.exe /Image:"$MountDirectory" /Add-Package /PackagePath:"$UpdateNetCU" /LogPath:"$CurrentLog"
+            if ($LASTEXITCODE -ne 0) {
+                throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+            }
+        }
         Catch {
-            if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+            if ($_.Exception.Message -match '0x800f081e') {
+                Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+            }
             if ($_.Exception.Message -match '0x8007371b') {
                 Write-Verbose "OSDBuilder: 0x8007371b ERROR_SXS_TRANSACTION_CLOSURE_INCOMPLETE" -Verbose
                 Write-Verbose "One or more required members of the transaction are not present" -Verbose
@@ -7013,7 +7242,12 @@ function Update-DotNetOS {
 
         $CurrentLog = "$Info\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-Update-DotNetOS-KB$($Update.FileKBNumber).log"
         Write-Verbose "CurrentLog: $CurrentLog"
-        Try {Add-WindowsPackage -Path "$MountDirectory" -PackagePath "$UpdateNetCU" -LogPath "$CurrentLog" | Out-Null}
+        Try {
+            $DismResult = & dism.exe /Image:"$MountDirectory" /Add-Package /PackagePath:"$UpdateNetCU" /LogPath:"$CurrentLog"
+            if ($LASTEXITCODE -ne 0) {
+                throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+            }
+        }
         Catch {
             if ($_.Exception.Message -match '0x800f081e') {
                 Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
@@ -7162,9 +7396,16 @@ function Update-OptionalOS {
 
         $CurrentLog = "$Info\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-Update-OptionalOS-KB$($Update.FileKBNumber).log"
         Write-Verbose "CurrentLog: $CurrentLog"
-        Try {Add-WindowsPackage -Path "$MountDirectory" -PackagePath "$UpdateOptional" -LogPath "$CurrentLog" | Out-Null}
+        Try {
+            $DismResult = & dism.exe /Image:"$MountDirectory" /Add-Package /PackagePath:"$UpdateOptional" /LogPath:"$CurrentLog"
+            if ($LASTEXITCODE -ne 0) {
+                throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+            }
+        }
         Catch {
-            if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+            if ($_.Exception.Message -match '0x800f081e') {
+                Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+            }
             Write-Verbose "$CurrentLog" -Verbose
         }
     }
@@ -7213,9 +7454,16 @@ function Update-ServicingStackOS {
 
         $CurrentLog = "$Info\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-Update-ServicingStackOS-KB$($Update.FileKBNumber).log"
         Write-Verbose "CurrentLog: $CurrentLog"
-        Try {Add-WindowsPackage -Path "$MountDirectory" -PackagePath "$UpdateSSU" -LogPath "$CurrentLog" | Out-Null}
+        Try {
+            $DismResult = & dism.exe /Image:"$MountDirectory" /Add-Package /PackagePath:"$UpdateSSU" /LogPath:"$CurrentLog"
+            if ($LASTEXITCODE -ne 0) {
+                throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+            }
+        }
         Catch {
-            if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+            if ($_.Exception.Message -match '0x800f081e') {
+                Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+            }
             Write-Verbose "OSDBuilder: Review the log for more information" -Verbose
             Write-Verbose "$CurrentLog" -Verbose
         }
@@ -7269,9 +7517,16 @@ function Update-ServicingStackPE {
 
         $CurrentLog = "$PEInfo\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-Update-ServicingStackPE-KB$($Update.KBNumber)-WinPE.log"
         Write-Verbose "CurrentLog: $CurrentLog"
-        Try {Add-WindowsPackage -Path "$MountWinPE" -PackagePath "$UpdateSSU" -LogPath "$CurrentLog" | Out-Null}
+        Try {
+            $DismResult = & dism.exe /Image:"$MountWinPE" /Add-Package /PackagePath:"$UpdateSSU" /LogPath:"$CurrentLog"
+            if ($LASTEXITCODE -ne 0) {
+                throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+            }
+        }
         Catch {
-            if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+            if ($_.Exception.Message -match '0x800f081e') {
+                Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+            }
             Write-Verbose "OSDBuilder: Review the log for more information" -Verbose
             Write-Verbose "$CurrentLog" -Verbose
         }
@@ -7300,12 +7555,19 @@ function Update-ServicingStackPE {
         
         $CurrentLog = "$PEInfo\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-Update-ServicingStackPE-KB$($Update.KBNumber)-WinRE.log"
         Write-Verbose "CurrentLog: $CurrentLog"
-        Try {Add-WindowsPackage -Path "$MountWinRE" -PackagePath "$UpdateSSU" -LogPath "$CurrentLog" | Out-Null}
+        Try {
+            $DismResult = & dism.exe /Image:"$MountWinRE" /Add-Package /PackagePath:"$UpdateSSU" /LogPath:"$CurrentLog"
+            if ($LASTEXITCODE -ne 0) {
+                throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+            }
+        }
         Catch {
             $ErrorMessage = $_.Exception.$ErrorMessage
             Write-Warning "$CurrentLog"
             Write-Host "$ErrorMessage"
-            if ($ErrorMessage -like "*0x800f081e*") {Write-Warning "Update not applicable to this Operating System"}
+            if ($ErrorMessage -like "*0x800f081e*") {
+                Write-Warning "Update not applicable to this Operating System"
+            }
         }
     }
     #=================================================
@@ -7332,9 +7594,16 @@ function Update-ServicingStackPE {
         
         $CurrentLog = "$PEInfo\logs\$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-Update-ServicingStackPE-KB$($Update.KBNumber)-WinSE.log"
         Write-Verbose "CurrentLog: $CurrentLog"
-        Try {Add-WindowsPackage -Path "$MountWinSE" -PackagePath "$UpdateSSU" -LogPath "$CurrentLog" | Out-Null}
+        Try {
+            $DismResult = & dism.exe /Image:"$MountWinSE" /Add-Package /PackagePath:"$UpdateSSU" /LogPath:"$CurrentLog"
+            if ($LASTEXITCODE -ne 0) {
+                throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+            }
+        }
         Catch {
-            if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+            if ($_.Exception.Message -match '0x800f081e') {
+                Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+            }
             Write-Verbose "OSDBuilder: Review the log for more information" -Verbose
             Write-Verbose "$CurrentLog" -Verbose
         }
@@ -7501,9 +7770,16 @@ function Update-WindowsServer2012R2OS {
         Write-Host -ForegroundColor Gray "$($Update.Title) - $(Split-Path $Update.OriginUri -Leaf)"
 
         Write-Verbose "CurrentLog: $CurrentLog"
-        Try {Add-WindowsPackage -Path "$MountDirectory" -PackagePath "$UpdateTwelveR2" -LogPath "$CurrentLog" | Out-Null}
+        Try {
+            $DismResult = & dism.exe /Image:"$MountDirectory" /Add-Package /PackagePath:"$UpdateTwelveR2" /LogPath:"$CurrentLog"
+            if ($LASTEXITCODE -ne 0) {
+                throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+            }
+        }
         Catch {
-            if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+            if ($_.Exception.Message -match '0x800f081e') {
+                Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+            }
             Write-Verbose "OSDBuilder: Review the log for more information" -Verbose
             Write-Verbose "$CurrentLog" -Verbose
         }
@@ -7582,9 +7858,16 @@ function Update-WindowsSevenOS {
         Write-Host -ForegroundColor Gray "$($Update.Title) - $(Split-Path $Update.OriginUri -Leaf)"
 
         Write-Verbose "CurrentLog: $CurrentLog"
-        Try {Add-WindowsPackage -Path "$MountDirectory" -PackagePath "$UpdateSeven" -LogPath "$CurrentLog" | Out-Null}
+        Try {
+            $DismResult = & dism.exe /Image:"$MountDirectory" /Add-Package /PackagePath:"$UpdateSeven" /LogPath:"$CurrentLog"
+            if ($LASTEXITCODE -ne 0) {
+                throw "DISM exited with code $LASTEXITCODE`: $DismResult"
+            }
+        }
         Catch {
-            if ($_.Exception.Message -match '0x800f081e') {Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose}
+            if ($_.Exception.Message -match '0x800f081e') {
+                Write-Verbose "OSDBuilder: 0x800f081e The package is not applicable to this image" -Verbose
+            }
             Write-Verbose "OSDBuilder: Review the log for more information" -Verbose
             Write-Verbose "$CurrentLog" -Verbose
         }
